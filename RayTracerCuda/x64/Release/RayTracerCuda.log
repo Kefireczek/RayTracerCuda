@@ -1,0 +1,470 @@
+﻿  Compiling CUDA source file kernel.cu...
+  
+  C:\Users\Patryk\Documents\GitHub\RayTracerCuda>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\bin\HostX64\x64" -x cu   -I"C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include" -I"C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-2.6.2\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include" -I"C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\x64-windows\x64-windows\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include"     --keep-dir RayTracerCuda\x64\Release  -maxrregcount=0   --machine 64 --compile -cudart static    -DWIN32 -DWIN64 -DNDEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /O2 /FS   /MD " -Xcompiler "/FdRayTracerCuda\x64\Release\vc143.pdb" -o C:\Users\Patryk\Documents\GitHub\RayTracerCuda\RayTracerCuda\x64\Release\kernel.cu.obj "C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu" 
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/System/String.hpp(527): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        std::basic_string<Uint32> m_string; 
+                                  ^
+  
+  Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Window/WindowBase.hpp(474): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2u          m_size;           
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Transformable.hpp(319): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_origin;                     
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Transformable.hpp(320): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_position;                   
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Transformable.hpp(322): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_scale;                      
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Vertex.hpp(97): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f  position;  
+                  ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Vertex.hpp(99): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f  texCoords; 
+                  ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/VertexArray.hpp(190): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        std::vector<Vertex> m_vertices;      
+                            ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shape.hpp(309): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        IntRect        m_textureRect;      
+                       ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shape.hpp(315): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        FloatRect      m_insideBounds;     
+                       ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shape.hpp(316): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        FloatRect      m_bounds;           
+                       ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/ConvexShape.hpp(115): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        std::vector<Vector2f> m_points; 
+                              ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Glyph.hpp(57): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        FloatRect bounds;      
+                  ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Glyph.hpp(58): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        IntRect   textureRect; 
+                  ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Image.hpp(288): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2u           m_size;   
+                           ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Image.hpp(289): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        std::vector<Uint8> m_pixels; 
+                           ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Texture.hpp(619): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2u     m_size;          
+                     ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Texture.hpp(620): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2u     m_actualSize;    
+                     ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Font.hpp(411): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Info                       m_info;        
+                                   ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Font.hpp(412): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        mutable PageTable          m_pages;       
+                                   ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Font.hpp(413): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        mutable std::vector<Uint8> m_pixelBuffer; 
+                                   ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/RectangleShape.hpp(102): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f m_size; 
+                 ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/View.hpp(272): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_center;              
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/View.hpp(273): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_size;                
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/View.hpp(275): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        FloatRect         m_viewport;            
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/RenderTarget.hpp(484): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        StatesCache m_cache;       
+                    ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shader.hpp(750): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        TextureTable m_textures;       
+                     ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shader.hpp(751): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        UniformTable m_uniforms;       
+                     ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Sprite.hpp(220): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        IntRect        m_textureRect; 
+                       ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Text.hpp(449): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        mutable FloatRect   m_bounds;              
+                            ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec2.hpp(97): warning #20012-D: __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec2.hpp(97): warning #20012-D: __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec3.hpp(102): warning #20012-D: __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec3.hpp(102): warning #20012-D: __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec4.hpp(100): warning #20012-D: __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec4.hpp(100): warning #20012-D: __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x2.hpp(35): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x2.hpp(35): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x3.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x3.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x4.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x4.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x2.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x2.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x3.hpp(35): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x3.hpp(35): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x4.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x4.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x2.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x2.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x3.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x3.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x4.hpp(35): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x4.hpp(35): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\detail/type_vec1.hpp(95): warning #20012-D: __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\detail/type_vec1.hpp(95): warning #20012-D: __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu(19): warning #1866-D: attribute does not apply to any entity
+    __declspec(__host__) __declspec(__device__) struct Material {
+                                    ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/System/String.hpp(527): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        std::basic_string<Uint32> m_string; 
+                                  ^
+  
+  Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Window/WindowBase.hpp(474): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2u          m_size;           
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Transformable.hpp(319): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_origin;                     
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Transformable.hpp(320): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_position;                   
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Transformable.hpp(322): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_scale;                      
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Vertex.hpp(97): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f  position;  
+                  ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Vertex.hpp(99): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f  texCoords; 
+                  ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/VertexArray.hpp(190): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        std::vector<Vertex> m_vertices;      
+                            ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shape.hpp(309): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        IntRect        m_textureRect;      
+                       ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shape.hpp(315): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        FloatRect      m_insideBounds;     
+                       ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shape.hpp(316): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        FloatRect      m_bounds;           
+                       ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/ConvexShape.hpp(115): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        std::vector<Vector2f> m_points; 
+                              ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Glyph.hpp(57): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        FloatRect bounds;      
+                  ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Glyph.hpp(58): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        IntRect   textureRect; 
+                  ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Image.hpp(288): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2u           m_size;   
+                           ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Image.hpp(289): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        std::vector<Uint8> m_pixels; 
+                           ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Texture.hpp(619): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2u     m_size;          
+                     ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Texture.hpp(620): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2u     m_actualSize;    
+                     ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Font.hpp(411): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Info                       m_info;        
+                                   ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Font.hpp(412): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        mutable PageTable          m_pages;       
+                                   ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Font.hpp(413): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        mutable std::vector<Uint8> m_pixelBuffer; 
+                                   ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/RectangleShape.hpp(102): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f m_size; 
+                 ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/View.hpp(272): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_center;              
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/View.hpp(273): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        Vector2f          m_size;                
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/View.hpp(275): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        FloatRect         m_viewport;            
+                          ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/RenderTarget.hpp(484): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        StatesCache m_cache;       
+                    ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shader.hpp(750): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        TextureTable m_textures;       
+                     ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Shader.hpp(751): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        UniformTable m_uniforms;       
+                     ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Sprite.hpp(220): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        IntRect        m_textureRect; 
+                       ^
+  
+C:/Users/Patryk/Documents/GitHub/RayTracerCuda/SFML-2.6.2/include\SFML/Graphics/Text.hpp(449): warning #1394-D: field of class type without a DLL interface used in a class with a DLL interface
+        mutable FloatRect   m_bounds;              
+                            ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec2.hpp(97): warning #20012-D: __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec2.hpp(97): warning #20012-D: __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec3.hpp(102): warning #20012-D: __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec3.hpp(102): warning #20012-D: __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec4.hpp(100): warning #20012-D: __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_vec4.hpp(100): warning #20012-D: __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x2.hpp(35): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x2.hpp(35): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x3.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x3.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x4.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat2x4.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x2.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x2.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x3.hpp(35): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x3.hpp(35): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x4.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat3x4.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x2.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x2.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x3.hpp(36): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x3.hpp(36): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x4.hpp(35): warning #20012-D: __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\ext\../detail/type_mat4x4.hpp(35): warning #20012-D: __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  mat() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\detail/type_vec1.hpp(95): warning #20012-D: __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include\glm\detail/type_vec1.hpp(95): warning #20012-D: __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+    		__declspec(__device__) __declspec(__host__)  vec() = default;
+    		                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu(19): warning #1866-D: attribute does not apply to any entity
+    __declspec(__host__) __declspec(__device__) struct Material {
+                                    ^
+  
+  kernel.cu
+  tmpxft_00003424_00000000-7_kernel.cudafe1.cpp
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu(78): warning C4305: "argument": obcięcie z "double" do "float"
+     Trwa tworzenie biblioteki C:\Users\Patryk\Documents\GitHub\RayTracerCuda\x64\Release\RayTracerCuda.lib i obiektu C:\Users\Patryk\Documents\GitHub\RayTracerCuda\x64\Release\RayTracerCuda.exp
+LINK : warning LNK4098: domyślna biblioteka „LIBCMT” powoduje konflikt z innymi bibliotekami; użyj opcji /NODEFAULTLIB:biblioteka
+  LINK : określono opcję /LTCG, lecz generowanie kodu nie było wymagane; usuń opcję /LTCG z wiersza polecenia konsolidatora w celu podwyższenia wydajności konsolidatora
+  RayTracerCuda.vcxproj -> C:\Users\Patryk\Documents\GitHub\RayTracerCuda\x64\Release\RayTracerCuda.exe

@@ -1,0 +1,450 @@
+﻿  Compiling CUDA source file kernel.cu...
+  
+  C:\Users\Patryk\Documents\GitHub\RayTracerCuda>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\bin\HostX64\x64" -x cu   -I"C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include" -I"C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include" -I"C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\x64-windows\x64-windows\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include"  -G   --keep-dir RayTracerCuda\x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static  -g  -DWIN32 -DWIN64 -D_DEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdRayTracerCuda\x64\Debug\vc143.pdb" -o C:\Users\Patryk\Documents\GitHub\RayTracerCuda\RayTracerCuda\x64\Debug\kernel.cu.obj "C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu" 
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(77): error : variable type "const lambda [](uint8_t, uint8_t)->uint8_t" in constexpr function is not a literal type
+        const auto clampedAdd = [](std::uint8_t lhs, std::uint8_t rhs)
+                   ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(93): error : variable type "const lambda [](uint8_t, uint8_t)->uint8_t" in constexpr function is not a literal type
+        const auto clampedSub = [](std::uint8_t lhs, std::uint8_t rhs)
+                   ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(109): error : variable type "const lambda [](uint8_t, uint8_t)->uint8_t" in constexpr function is not a literal type
+        const auto scaledMul = [](std::uint8_t lhs, std::uint8_t rhs)
+                   ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(146): error : inline specifier allowed on function declarations only
+    inline constexpr Color Color::Black(0, 0, 0);
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(147): error : inline specifier allowed on function declarations only
+    inline constexpr Color Color::White(255, 255, 255);
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(148): error : inline specifier allowed on function declarations only
+    inline constexpr Color Color::Red(255, 0, 0);
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(149): error : inline specifier allowed on function declarations only
+    inline constexpr Color Color::Green(0, 255, 0);
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(150): error : inline specifier allowed on function declarations only
+    inline constexpr Color Color::Blue(0, 0, 255);
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(151): error : inline specifier allowed on function declarations only
+    inline constexpr Color Color::Yellow(255, 255, 0);
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(152): error : inline specifier allowed on function declarations only
+    inline constexpr Color Color::Magenta(255, 0, 255);
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(153): error : inline specifier allowed on function declarations only
+    inline constexpr Color Color::Cyan(0, 255, 255);
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Color.inl(154): error : inline specifier allowed on function declarations only
+    inline constexpr Color Color::Transparent(0, 0, 0, 0);
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/System/Angle.inl(272): error : inline specifier allowed on function declarations only
+    inline constexpr Angle Angle::Zero;
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.hpp(98): error : namespace "std" has no member "optional"
+        [[nodiscard]] constexpr std::optional<Rect<T>> findIntersection(const Rect<T>& rectangle) const;
+                                     ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.hpp(98): error : explicit type is missing ("int" assumed)
+        [[nodiscard]] constexpr std::optional<Rect<T>> findIntersection(const Rect<T>& rectangle) const;
+                                ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.hpp(98): error : attribute "nodiscard" does not apply here
+        [[nodiscard]] constexpr std::optional<Rect<T>> findIntersection(const Rect<T>& rectangle) const;
+          ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.hpp(98): error : expected a ";"
+        [[nodiscard]] constexpr std::optional<Rect<T>> findIntersection(const Rect<T>& rectangle) const;
+                                             ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(71): error : namespace "std" has no member "optional"
+    constexpr std::optional<Rect<T>> Rect<T>::findIntersection(const Rect<T>& rectangle) const
+                   ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(71): error : "constexpr" is not valid here
+    constexpr std::optional<Rect<T>> Rect<T>::findIntersection(const Rect<T>& rectangle) const
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(71): error : expected a ";"
+    constexpr std::optional<Rect<T>> Rect<T>::findIntersection(const Rect<T>& rectangle) const
+                           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(93): warning #12-D: parsing restarts here after previous syntax error
+        const T interTop    = max(r1MinY, r2MinY);
+                                                 ^
+  
+  Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(94): error : identifier "T" is undefined
+        const T interRight  = min(r1MaxX, r2MaxX);
+              ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(94): error : identifier "r1MaxX" is undefined
+        const T interRight  = min(r1MaxX, r2MaxX);
+                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(94): error : identifier "r2MaxX" is undefined
+        const T interRight  = min(r1MaxX, r2MaxX);
+                                          ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(95): error : identifier "T" is undefined
+        const T interBottom = min(r1MaxY, r2MaxY);
+              ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(95): error : identifier "r1MaxY" is undefined
+        const T interBottom = min(r1MaxY, r2MaxY);
+                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(95): error : identifier "r2MaxY" is undefined
+        const T interBottom = min(r1MaxY, r2MaxY);
+                                          ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(98): error : expected a declaration
+        if ((interLeft < interRight) && (interTop < interBottom))
+        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(103): warning #12-D: parsing restarts here after previous syntax error
+        return std::nullopt;
+                           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(109): error : Vector2 is not a template
+    constexpr Vector2<T> Rect<T>::getCenter() const
+              ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(109): error : Rect is not a template
+    constexpr Vector2<T> Rect<T>::getCenter() const
+                         ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(109): error : a type qualifier is not allowed on a nonmember function
+    constexpr Vector2<T> Rect<T>::getCenter() const
+                                              ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(117): error : Rect is not a template
+    constexpr bool operator==(const Rect<T>& lhs, const Rect<T>& rhs)
+                                    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(117): error : Rect is not a template
+    constexpr bool operator==(const Rect<T>& lhs, const Rect<T>& rhs)
+                                                        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(117): error : nonmember operator requires a parameter with class or enum type
+    constexpr bool operator==(const Rect<T>& lhs, const Rect<T>& rhs)
+                   ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(125): error : Rect is not a template
+    constexpr bool operator!=(const Rect<T>& lhs, const Rect<T>& rhs)
+                                    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(125): error : Rect is not a template
+    constexpr bool operator!=(const Rect<T>& lhs, const Rect<T>& rhs)
+                                                        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(125): error : nonmember operator requires a parameter with class or enum type
+    constexpr bool operator!=(const Rect<T>& lhs, const Rect<T>& rhs)
+                   ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Rect.inl(130): error : expected a declaration
+    } 
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/StencilMode.hpp(68): warning #12-D: parsing restarts here after previous syntax error
+    };
+     ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/StencilMode.hpp(108): error : identifier "StencilComparison" is undefined
+        StencilComparison stencilComparison{StencilComparison::Always}; 
+        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/StencilMode.hpp(109): error : identifier "StencilUpdateOperation" is undefined
+        StencilUpdateOperation stencilUpdateOperation{
+        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/StencilMode.hpp(108): error : name followed by "::" must be a class or namespace name
+        StencilComparison stencilComparison{StencilComparison::Always}; 
+                                            ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/StencilMode.hpp(110): error : name followed by "::" must be a class or namespace name
+            StencilUpdateOperation::Keep}; 
+            ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/StencilMode.hpp(140): error : expected a declaration
+    } 
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(72): warning #12-D: parsing restarts here after previous syntax error
+        constexpr Transform(float a00, float a01, float a02, float a10, float a11, float a12, float a20, float a21, float a22);
+                                                                                                                              ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(89): error : a type qualifier is not allowed on a nonmember function
+        [[nodiscard]] constexpr const float* getMatrix() const;
+                                                         ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(100): error : identifier "Transform" is undefined
+        [[nodiscard]] constexpr Transform getInverse() const;
+                                ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(100): error : a type qualifier is not allowed on a nonmember function
+        [[nodiscard]] constexpr Transform getInverse() const;
+                                                       ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(116): error : identifier "Vector2f" is undefined
+        [[nodiscard]] constexpr Vector2f transformPoint(Vector2f point) const;
+                                ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(116): error : identifier "Vector2f" is undefined
+        [[nodiscard]] constexpr Vector2f transformPoint(Vector2f point) const;
+                                                        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(116): error : a type qualifier is not allowed on a nonmember function
+        [[nodiscard]] constexpr Vector2f transformPoint(Vector2f point) const;
+                                                                        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(132): error : identifier "FloatRect" is undefined
+        [[nodiscard]] constexpr FloatRect transformRect(const FloatRect& rectangle) const;
+                                ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(132): error : identifier "FloatRect" is undefined
+        [[nodiscard]] constexpr FloatRect transformRect(const FloatRect& rectangle) const;
+                                                              ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(132): error : a type qualifier is not allowed on a nonmember function
+        [[nodiscard]] constexpr FloatRect transformRect(const FloatRect& rectangle) const;
+                                                                                    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(152): error : identifier "Transform" is undefined
+        constexpr Transform& combine(const Transform& transform);
+                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(152): error : identifier "Transform" is undefined
+        constexpr Transform& combine(const Transform& transform);
+                                           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(171): error : identifier "Transform" is undefined
+        constexpr Transform& translate(Vector2f offset);
+                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(171): error : identifier "Vector2f" is undefined
+        constexpr Transform& translate(Vector2f offset);
+                                       ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(190): error : identifier "Transform" is undefined
+        __declspec(dllimport) Transform& rotate(Angle angle);
+                              ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(190): error : identifier "Angle" is undefined
+        __declspec(dllimport) Transform& rotate(Angle angle);
+                                                ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(215): error : identifier "Transform" is undefined
+        __declspec(dllimport) Transform& rotate(Angle angle, Vector2f center);
+                              ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(215): error : identifier "Angle" is undefined
+        __declspec(dllimport) Transform& rotate(Angle angle, Vector2f center);
+                                                ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(215): error : identifier "Vector2f" is undefined
+        __declspec(dllimport) Transform& rotate(Angle angle, Vector2f center);
+                                                             ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(234): error : identifier "Transform" is undefined
+        constexpr Transform& scale(Vector2f factors);
+                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(234): error : identifier "Vector2f" is undefined
+        constexpr Transform& scale(Vector2f factors);
+                                   ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(259): error : identifier "Transform" is undefined
+        constexpr Transform& scale(Vector2f factors, Vector2f center);
+                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(259): error : identifier "Vector2f" is undefined
+        constexpr Transform& scale(Vector2f factors, Vector2f center);
+                                   ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(259): error : identifier "Vector2f" is undefined
+        constexpr Transform& scale(Vector2f factors, Vector2f center);
+                                                     ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(265): error : identifier "Transform" is undefined
+        static const Transform Identity; 
+                     ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(265): warning #257-D: const variable "Identity" requires an initializer
+        static const Transform Identity; 
+                                       ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(267): error : expected a declaration
+    private:
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(275): warning #12-D: parsing restarts here after previous syntax error
+                                       0.f, 0.f, 0.f, 1.f}; 
+                                                          ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(277): error : expected a declaration
+    };
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(291): error : identifier "Transform" is undefined
+    [[nodiscard]] constexpr Transform operator*(const Transform& left, const Transform& right);
+                            ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(291): error : identifier "Transform" is undefined
+    [[nodiscard]] constexpr Transform operator*(const Transform& left, const Transform& right);
+                                                      ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(291): error : identifier "Transform" is undefined
+    [[nodiscard]] constexpr Transform operator*(const Transform& left, const Transform& right);
+                                                                             ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(291): error : nonmember operator requires a parameter with class or enum type
+    [[nodiscard]] constexpr Transform operator*(const Transform& left, const Transform& right);
+                                      ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(305): error : identifier "Transform" is undefined
+    constexpr Transform& operator*=(Transform& left, const Transform& right);
+              ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(305): error : identifier "Transform" is undefined
+    constexpr Transform& operator*=(Transform& left, const Transform& right);
+                                    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(305): error : identifier "Transform" is undefined
+    constexpr Transform& operator*=(Transform& left, const Transform& right);
+                                                           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(305): error : nonmember operator requires a parameter with class or enum type
+    constexpr Transform& operator*=(Transform& left, const Transform& right);
+                         ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(319): error : identifier "Vector2f" is undefined
+    [[nodiscard]] constexpr Vector2f operator*(const Transform& left, Vector2f right);
+                            ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(319): error : identifier "Transform" is undefined
+    [[nodiscard]] constexpr Vector2f operator*(const Transform& left, Vector2f right);
+                                                     ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(319): error : identifier "Vector2f" is undefined
+    [[nodiscard]] constexpr Vector2f operator*(const Transform& left, Vector2f right);
+                                                                      ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(319): error : nonmember operator requires a parameter with class or enum type
+    [[nodiscard]] constexpr Vector2f operator*(const Transform& left, Vector2f right);
+                                     ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(334): error : identifier "Transform" is undefined
+    [[nodiscard]] constexpr bool operator==(const Transform& left, const Transform& right);
+                                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(334): error : identifier "Transform" is undefined
+    [[nodiscard]] constexpr bool operator==(const Transform& left, const Transform& right);
+                                                                         ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(334): error : nonmember operator requires a parameter with class or enum type
+    [[nodiscard]] constexpr bool operator==(const Transform& left, const Transform& right);
+                                 ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(348): error : identifier "Transform" is undefined
+    [[nodiscard]] constexpr bool operator!=(const Transform& left, const Transform& right);
+                                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(348): error : identifier "Transform" is undefined
+    [[nodiscard]] constexpr bool operator!=(const Transform& left, const Transform& right);
+                                                                         ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(348): error : nonmember operator requires a parameter with class or enum type
+    [[nodiscard]] constexpr bool operator!=(const Transform& left, const Transform& right);
+                                 ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.hpp(350): error : expected a declaration
+    } 
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.inl(81): warning #12-D: parsing restarts here after previous syntax error
+                    (m_matrix[5]  * m_matrix[0] - m_matrix[1] * m_matrix[4])  / det};
+                                                                                    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.inl(83): error : expected a declaration
+        }
+        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.inl(86): error : expected a declaration
+    }
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.inl(121): warning #12-D: parsing restarts here after previous syntax error
+        return {pmin, pmax - pmin};
+                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.inl(122): error : expected a declaration
+    }
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.inl(234): warning #12-D: parsing restarts here after previous syntax error
+    inline constexpr Transform Transform::Identity;
+                                                  ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/Transform.inl(236): error : expected a declaration
+    } 
+    ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(62): warning #12-D: parsing restarts here after previous syntax error
+        RenderStates() = default;
+                                ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(70): error : identifier "BlendMode" is undefined
+        RenderStates(const BlendMode& theBlendMode);
+                           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(70): error : explicit type is missing ("int" assumed)
+        RenderStates(const BlendMode& theBlendMode);
+        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(78): error : explicit type is missing ("int" assumed)
+        RenderStates(const StencilMode& theStencilMode);
+        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(86): error : identifier "Transform" is undefined
+        RenderStates(const Transform& theTransform);
+                           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(86): error : explicit type is missing ("int" assumed)
+        RenderStates(const Transform& theTransform);
+        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(94): error : identifier "Texture" is undefined
+        RenderStates(const Texture* theTexture);
+                           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(94): error : explicit type is missing ("int" assumed)
+        RenderStates(const Texture* theTexture);
+        ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(102): error : identifier "Shader" is undefined
+        RenderStates(const Shader* theShader);
+                           ^
+  
+C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include\SFML/Graphics/RenderStates.hpp(102): error : explicit type is missing ("int" assumed)
+        RenderStates(const Shader* theShader);
+        ^
+  
+  Error limit reached.
+  100 errors detected in the compilation of "C:/Users/Patryk/Documents/GitHub/RayTracerCuda/kernel.cu".
+  Compilation terminated.
+  kernel.cu
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations\CUDA 12.6.targets(799,9): error MSB3721: Polecenie "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\bin\HostX64\x64" -x cu   -I"C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\vcpkg\pkgs\glm_x64-windows\include" -I"C:\Users\Patryk\Documents\GitHub\RayTracerCuda\SFML-3.0.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include" -I"C:\Users\Patryk\Documents\GitHub\RayTracerCuda\vcpkg_installed\x64-windows\x64-windows\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include"  -G   --keep-dir RayTracerCuda\x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static  -g  -DWIN32 -DWIN64 -D_DEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdRayTracerCuda\x64\Debug\vc143.pdb" -o C:\Users\Patryk\Documents\GitHub\RayTracerCuda\RayTracerCuda\x64\Debug\kernel.cu.obj "C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu" zostało zakończone; kod błędu: 4.
