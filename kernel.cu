@@ -17,7 +17,7 @@ const int MAX_BOUNCE_COUNT = 10;
 const int NUM_RAYS_PER_PIXEL = 10;
 
 __constant__ float C_PHI = 7.017f;
-__constant__ float N_PHI = 0.221f, P_PHI = 1.215f, STEPWIDTH = 5;
+__constant__ float N_PHI = 0.221f, P_PHI = 1.215f;
 
 float kernel1D[5] = { 1.0f / 16, 1.0f / 4, 3.0f / 8, 1.0f / 4, 1.0f / 16 };
 
@@ -339,7 +339,7 @@ sf::Color ConvertColor(const float3& hdrColor) {
 }
 
 //Denoising
-__global__ void atrousFilterKernel(float3* accBuffer, float3* posBuffer, float3* normalBuffer, float3* outputBuffer) {
+__global__ void atrousFilterKernel(float3* accBuffer, float3* posBuffer, float3* normalBuffer,float3* denoiserBuffer ,float3* outputBuffer) {
     int x = blockIdx.x * blockDim.x + threadIdx.x;
     int y = blockIdx.y * blockDim.y + threadIdx.y;
     if (x >= WIDTH || y >= HEIGHT) return;
@@ -349,40 +349,45 @@ __global__ void atrousFilterKernel(float3* accBuffer, float3* posBuffer, float3*
     float3 c_val = accBuffer[idx];
     float3 n_val = normalBuffer[idx];
     float3 p_val = posBuffer[idx];
-    
+
     float3 sum = make_float3(0);
     float cum_w = 0.0f;
     float2 step = make_float2(1. / WIDTH, 1. / HEIGHT);
 
-    for (int i = 0; i < 25; i++)
+    for (int k = 0; k < 4; k++)
     {
-        int2 offset = offsets[i];
-        int sampleX = x + int(offset.x * STEPWIDTH);
-        int sampleY = y + int(offset.y * STEPWIDTH);
+        float stepWidth = 1 << k;
 
-        if (sampleX < 0 || sampleX >= WIDTH || sampleY < 0 || sampleY >= HEIGHT) continue;
-        int sampleIdx = sampleY * WIDTH + sampleX;
+        for (int i = 0; i < 25; i++)
+        {
+            int2 offset = offsets[i];
+            int sampleX = x + int(offset.x * stepWidth);
+            int sampleY = y + int(offset.y * stepWidth);
 
-        float3 c_sample = accBuffer[sampleIdx];
-        float3 diff = c_val - c_sample;
-        float dist2 = dot(diff, diff);
-        float c_w = fminf(expf(-dist2 / C_PHI), 1.0f);
+            if (sampleX < 0 || sampleX >= WIDTH || sampleY < 0 || sampleY >= HEIGHT) continue;
+            int sampleIdx = sampleY * WIDTH + sampleX;
 
-        float3 n_sample = normalBuffer[sampleIdx];
-        diff = n_val - n_sample;
-        dist2 = fmaxf(dot(diff, diff) / (STEPWIDTH * STEPWIDTH), 0.0f);
-        float n_w = fminf(expf(-dist2 / N_PHI), 1.0f);
+            float3 c_sample = accBuffer[sampleIdx];
+            float3 diff = c_val - c_sample;
+            float dist2 = dot(diff, diff);
+            float c_w = fminf(expf(-dist2 / C_PHI), 1.0f);
 
-        float3 p_sample = posBuffer[sampleIdx];
-        diff = p_val - p_sample;
-        dist2 = dot(diff, diff);
-        float p_w = fminf(expf(-dist2 / P_PHI), 1.0f);
+            float3 n_sample = normalBuffer[sampleIdx];
+            diff = n_val - n_sample;
+            dist2 = fmaxf(dot(diff, diff) / (stepWidth * stepWidth), 0.0f);
+            float n_w = fminf(expf(-dist2 / N_PHI), 1.0f);
 
-        float weight = c_w * n_w * p_w;
-        sum += c_sample * weight * kernel[i];
-        cum_w += weight * kernel[i];
+            float3 p_sample = posBuffer[sampleIdx];
+            diff = p_val - p_sample;
+            dist2 = dot(diff, diff);
+            float p_w = fminf(expf(-dist2 / P_PHI), 1.0f);
+
+            float weight = c_w * n_w * p_w;
+            sum += c_sample * weight * kernel[i];
+            cum_w += weight * kernel[i];
+        }
+        outputBuffer[idx] = sum / cum_w;
     }
-    outputBuffer[idx] = sum / cum_w;
 }
 
 int main() {
@@ -498,7 +503,11 @@ int main() {
     int2 hostOffsets[25] = { make_int2(-2, -2), make_int2(-1, -2), make_int2(0, -2), make_int2(1, -2), make_int2(2, -2), make_int2(-2, -1), make_int2(-1, -1), make_int2(0, -1), make_int2(1, -1), make_int2(2, -1), make_int2(-2, 0), make_int2(-1, 0), make_int2(0, 0), make_int2(1, 0), make_int2(2, 0), make_int2(-2, 1), make_int2(-1, 1), make_int2(0, 1), make_int2(1, 1), make_int2(2, 1), make_int2(-2, 2), make_int2(-1, 2), make_int2(0, 2), make_int2(1, 2), make_int2(2, 2) };
     cudaMemcpyToSymbol(offsets, &hostOffsets, 25 * sizeof(int2));
 
-    atrousFilterKernel << < numBlocks, threadsPerBlock >> > (d_accumulationBuffer, d_positionBuffer, d_normalBuffer, d_outputBuffer);
+    float3* d_denoiserBuffer;
+    cudaMalloc(&d_denoiserBuffer, WIDTH* HEIGHT * sizeof(float3));
+    cudaMemcpy(d_denoiserBuffer, d_accumulationBuffer, WIDTH* HEIGHT * sizeof(float3), cudaMemcpyDeviceToDevice);
+
+    atrousFilterKernel << < numBlocks, threadsPerBlock >> > (d_accumulationBuffer, d_positionBuffer, d_normalBuffer, d_denoiserBuffer, d_outputBuffer);
     cudaDeviceSynchronize();
 
     float totalWeight = 0.0f;
@@ -565,6 +574,7 @@ int main() {
     cudaFree(d_accumulationBuffer);
     cudaFree(d_positionBuffer);
     cudaFree(d_normalBuffer);
+    cudaFree(d_denoiserBuffer);
     cudaFree(d_outputBuffer);
     cudaFree(d_planes);
     cudaFree(d_spheres);

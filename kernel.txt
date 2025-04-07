@@ -13,8 +13,18 @@
 
 const int WIDTH = 800;
 const int HEIGHT = 800;
-const int MAX_BOUNCE_COUNT = 30;
-const int NUM_RAYS_PER_PIXEL = 100;
+const int MAX_BOUNCE_COUNT = 10;
+const int NUM_RAYS_PER_PIXEL = 10;
+
+__constant__ float C_PHI = 7.017f;
+__constant__ float N_PHI = 0.221f, P_PHI = 1.215f, STEPWIDTH = 5;
+
+float kernel1D[5] = { 1.0f / 16, 1.0f / 4, 3.0f / 8, 1.0f / 4, 1.0f / 16 };
+
+#define KERNEL_SIZE 25
+__constant__ float kernel[25];
+
+__constant__ int2 offsets[25];
 
 __host__ __device__ struct Material {
     float3 albedo;
@@ -86,7 +96,7 @@ std::vector<Sphere> hostSpheres = {
     { { -3, 4, 10 }, 3.0f, Material(glm::vec3(0.4, 0.8, 0.5))}
 };
 
-#define NUM_PLANES 6
+#define NUM_PLANES 5
 __managed__ Plane* d_planes;
 std::vector<Plane> hostPlanes = {
     {{0, 0, 20}, {0, 0, 1}, Material(glm::vec3(0.4, 0.4, 0.4))},
@@ -94,7 +104,7 @@ std::vector<Plane> hostPlanes = {
     {{10, 0, 0}, {1, 0, 0}, Material(glm::vec3(0, 0, 0.4))},
     {{0, 10, 0}, {0, 1, 0}, Material(glm::vec3(0.9, 0.9, 0.9), 1, glm::vec3(1, 1, 1))},
     {{0, -10, 0}, {0, -1, 0}, Material(glm::vec3(0.4, 0.4, 0.4))},
-    {{0, 0, -10}, {0, 0, -1}, Material(glm::vec3(0.4, 0.4, 0.4))},
+    //{{0, 0, -10}, {0, 0, -1}, Material(glm::vec3(0.4, 0.4, 0.4))},
 };
 
 //Intersection logic
@@ -166,7 +176,7 @@ __device__ float3 RandomUnitVectorCosineWeighted(uint32_t& state) {
 __device__ HitInfo CheckRayIntersections(const Ray& ray) {
     HitInfo closestHit{};
     closestHit.didHit = false;
-    float closestDistance = 100;
+    float closestDistance = 50;
 
     for (int i = 0; i < NUM_SPHERES; i++) {
         HitInfo hit = rayIntersectsSphere(ray, d_spheres[i]);
@@ -258,13 +268,32 @@ __device__ float3 GetPixelColor(int x, int y, uint32_t seed)
 }
 
 //Rendering Kernel
-__global__ void renderKernel(float3* accBuffer, int width, int height, uint32_t iFrame) {
+__global__ void renderKernel(float3* accBuffer, float3* posBuffer, float3* normalBuffer, int width, int height, uint32_t iFrame) {
     int x = blockIdx.x * blockDim.x + threadIdx.x;
     int y = blockIdx.y * blockDim.y + threadIdx.y;
-    if (x >= width || y >= height) return;
+    if (x >= WIDTH || y >= HEIGHT) return;
 
     int index = y * width + x;
     uint32_t rngState = (uint32_t)(uint32_t(x) * uint32_t(1973) + uint32_t(y) * uint32_t(9277) + uint32_t(iFrame) * uint32_t(26699)) | uint32_t(1);
+
+    Ray ray;
+    ray.origin = { 0,0,0 };
+    float aspectRatio = (float)width / height;
+    float2 uv = make_float2(
+        ((float)x / width) * 2 - 1,
+        -((float)y / height) * 2 + 1
+    );
+    ray.direction = normalize(make_float3(uv.x, uv.y / aspectRatio, 1.0f));
+
+    HitInfo hit = CheckRayIntersections(ray);
+    if (hit.didHit) {
+        posBuffer[index] = hit.hitPoint;
+        normalBuffer[index] = hit.normal;
+    }
+    else {
+        posBuffer[index] = make_float3(0, 0, 0);
+        normalBuffer[index] = make_float3(0, 0, 0);
+    }
 
     float weight = 1.0f / (iFrame + 1);
     float3 color = GetPixelColor(x, y, rngState);
@@ -309,15 +338,68 @@ sf::Color ConvertColor(const float3& hdrColor) {
     return sf::Color(r, g, b);
 }
 
+//Denoising
+__global__ void atrousFilterKernel(float3* accBuffer, float3* posBuffer, float3* normalBuffer, float3* outputBuffer) {
+    int x = blockIdx.x * blockDim.x + threadIdx.x;
+    int y = blockIdx.y * blockDim.y + threadIdx.y;
+    if (x >= WIDTH || y >= HEIGHT) return;
+
+    int idx = y * WIDTH + x;
+
+    float3 c_val = accBuffer[idx];
+    float3 n_val = normalBuffer[idx];
+    float3 p_val = posBuffer[idx];
+    
+    float3 sum = make_float3(0);
+    float cum_w = 0.0f;
+    float2 step = make_float2(1. / WIDTH, 1. / HEIGHT);
+
+    for (int i = 0; i < 25; i++)
+    {
+        int2 offset = offsets[i];
+        int sampleX = x + int(offset.x * STEPWIDTH);
+        int sampleY = y + int(offset.y * STEPWIDTH);
+
+        if (sampleX < 0 || sampleX >= WIDTH || sampleY < 0 || sampleY >= HEIGHT) continue;
+        int sampleIdx = sampleY * WIDTH + sampleX;
+
+        float3 c_sample = accBuffer[sampleIdx];
+        float3 diff = c_val - c_sample;
+        float dist2 = dot(diff, diff);
+        float c_w = fminf(expf(-dist2 / C_PHI), 1.0f);
+
+        float3 n_sample = normalBuffer[sampleIdx];
+        diff = n_val - n_sample;
+        dist2 = fmaxf(dot(diff, diff) / (STEPWIDTH * STEPWIDTH), 0.0f);
+        float n_w = fminf(expf(-dist2 / N_PHI), 1.0f);
+
+        float3 p_sample = posBuffer[sampleIdx];
+        diff = p_val - p_sample;
+        dist2 = dot(diff, diff);
+        float p_w = fminf(expf(-dist2 / P_PHI), 1.0f);
+
+        float weight = c_w * n_w * p_w;
+        sum += c_sample * weight * kernel[i];
+        cum_w += weight * kernel[i];
+    }
+    outputBuffer[idx] = sum / cum_w;
+}
+
 int main() {
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Ray Tracer");
     sf::Image newFrame;
     newFrame.create(WIDTH, HEIGHT, sf::Color::Black);
     sf::Texture texture;
 
-    float3* d_accumulationBuffer;
-    cudaMalloc(&d_accumulationBuffer, WIDTH * HEIGHT * sizeof(float3));
 
+    float3* d_accumulationBuffer;
+    float3* d_positionBuffer;
+    float3* d_normalBuffer;
+    float3* d_outputBuffer;
+    cudaMalloc(&d_accumulationBuffer, WIDTH * HEIGHT * sizeof(float3));
+    cudaMalloc(&d_positionBuffer, WIDTH * HEIGHT * sizeof(float3));
+    cudaMalloc(&d_normalBuffer, WIDTH * HEIGHT * sizeof(float3));
+    cudaMalloc(&d_outputBuffer, WIDTH * HEIGHT * sizeof(float3));
 
     //__managed__ Sphere* d_spheres;
     cudaMallocManaged(&d_spheres, NUM_SPHERES * sizeof(Sphere));
@@ -326,49 +408,166 @@ int main() {
     cudaMallocManaged(&d_planes, NUM_PLANES * sizeof(Plane));
     memcpy(d_planes, hostPlanes.data(), NUM_PLANES * sizeof(Plane));
 
+    enum class DisplayMode { Final, WorldPosition, Normal };
+    DisplayMode mode = DisplayMode::Final;
 
     uint32_t iFrame = 0;
 
+    //while (window.isOpen()) {
+
+    //    sf::Event event;
+    //    while (window.pollEvent(event)) {
+    //        // zamykanie okna
+    //        if (event.type == sf::Event::Closed)
+    //            window.close();
+    //        // przełączanie trybu po wciśnięciu spacji
+    //        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
+    //            if (mode == DisplayMode::Final)
+    //                mode = DisplayMode::WorldPosition;
+    //            else if (mode == DisplayMode::WorldPosition)
+    //                mode = DisplayMode::Normal;
+    //            else
+    //                mode = DisplayMode::Final;
+    //        }
+    //    }
+
+    //    dim3 threadsPerBlock(16, 16);
+    //    dim3 numBlocks((WIDTH + threadsPerBlock.x - 1) / threadsPerBlock.x, (HEIGHT + threadsPerBlock.y - 1) / threadsPerBlock.y);
+    //    renderKernel <<< numBlocks, threadsPerBlock >>> (d_accumulationBuffer, d_positionBuffer, d_normalBuffer, WIDTH, HEIGHT, iFrame);
+    //    cudaDeviceSynchronize();
+
+    //    std::vector<float3> hostBuffer(WIDTH * HEIGHT);
+    //    std::vector<float3> hostPos(WIDTH* HEIGHT);
+    //    std::vector<float3> hostNorm(WIDTH* HEIGHT);
+    //    cudaMemcpy(hostBuffer.data(), d_accumulationBuffer, WIDTH* HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
+    //    cudaMemcpy(hostPos.data(), d_positionBuffer, WIDTH* HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
+    //    cudaMemcpy(hostNorm.data(), d_normalBuffer, WIDTH* HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
+
+
+    //    for (int y = 0; y < HEIGHT; ++y) {
+    //        for (int x = 0; x < WIDTH; ++x) {
+    //            int index = y * WIDTH + x;
+    //            sf::Color pixelColor;
+    //            if (mode == DisplayMode::Final) {
+    //                // konwersja HDR -> sRGB (istniejąca funkcja)
+    //                pixelColor = ConvertColor(hostBuffer[index]);
+    //            }
+    //            else if (mode == DisplayMode::WorldPosition) {
+    //                // Mapowanie world position na zakres 0-255
+    //                // Tutaj przykładowo zakładamy, że pozycje mieszczą się w zakresie (-10,10)
+    //                float3 pos = hostPos[index];
+    //                auto mapPos = [](float v) {
+    //                    float norm = (v + 10.0f) / 20.0f;
+    //                    return static_cast<int>(std::min(std::max(norm, 0.0f), 1.0f) * 255);
+    //                    };
+    //                pixelColor = sf::Color(mapPos(pos.x), mapPos(pos.y), mapPos(pos.z));
+    //            }
+    //            else if (mode == DisplayMode::Normal) {
+    //                // Normalizujemy normalne: są w zakresie [-1,1], więc przesuwamy do [0,1]
+    //                float3 n = hostNorm[index];
+    //                int r = static_cast<int>((n.x * 0.5f + 0.5f) * 255.0f);
+    //                int g = static_cast<int>((n.y * 0.5f + 0.5f) * 255.0f);
+    //                int b = static_cast<int>((n.z * 0.5f + 0.5f) * 255.0f);
+    //                pixelColor = sf::Color(r, g, b);
+    //            }
+    //            newFrame.setPixel(x, y, pixelColor);
+    //        }
+    //    }
+
+    //    if (!texture.loadFromImage(newFrame)) {
+    //        return 1;
+    //    }
+    //    sf::Sprite sprite(texture);
+
+    //    window.clear();
+    //    window.draw(sprite);
+    //    window.display();
+
+    //    iFrame++;
+    //}
+
+
+    dim3 threadsPerBlock(16, 16);
+    dim3 numBlocks((WIDTH + threadsPerBlock.x - 1) / threadsPerBlock.x, (HEIGHT + threadsPerBlock.y - 1) / threadsPerBlock.y);
+    renderKernel << < numBlocks, threadsPerBlock >> > (d_accumulationBuffer, d_positionBuffer, d_normalBuffer, WIDTH, HEIGHT, iFrame);
+    cudaDeviceSynchronize();
+
+    float hostKernel[25] = { kernel1D[0] * kernel1D[0], kernel1D[0] * kernel1D[1], kernel1D[0] * kernel1D[2], kernel1D[0] * kernel1D[3], kernel1D[0] * kernel1D[4], kernel1D[1] * kernel1D[0], kernel1D[1] * kernel1D[1], kernel1D[1] * kernel1D[2], kernel1D[1] * kernel1D[3], kernel1D[1] * kernel1D[4], kernel1D[2] * kernel1D[0], kernel1D[2] * kernel1D[1], kernel1D[2] * kernel1D[2], kernel1D[2] * kernel1D[3], kernel1D[2] * kernel1D[4], kernel1D[3] * kernel1D[0], kernel1D[3] * kernel1D[1], kernel1D[3] * kernel1D[2], kernel1D[3] * kernel1D[3], kernel1D[3] * kernel1D[4], kernel1D[4] * kernel1D[0], kernel1D[4] * kernel1D[1], kernel1D[4] * kernel1D[2], kernel1D[4] * kernel1D[3], kernel1D[4] * kernel1D[4] };
+    cudaMemcpyToSymbol(kernel, &hostKernel, 25 * sizeof(float));
+
+    int2 hostOffsets[25] = { make_int2(-2, -2), make_int2(-1, -2), make_int2(0, -2), make_int2(1, -2), make_int2(2, -2), make_int2(-2, -1), make_int2(-1, -1), make_int2(0, -1), make_int2(1, -1), make_int2(2, -1), make_int2(-2, 0), make_int2(-1, 0), make_int2(0, 0), make_int2(1, 0), make_int2(2, 0), make_int2(-2, 1), make_int2(-1, 1), make_int2(0, 1), make_int2(1, 1), make_int2(2, 1), make_int2(-2, 2), make_int2(-1, 2), make_int2(0, 2), make_int2(1, 2), make_int2(2, 2) };
+    cudaMemcpyToSymbol(offsets, &hostOffsets, 25 * sizeof(int2));
+
+    atrousFilterKernel << < numBlocks, threadsPerBlock >> > (d_accumulationBuffer, d_positionBuffer, d_normalBuffer, d_outputBuffer);
+    cudaDeviceSynchronize();
+
+    float totalWeight = 0.0f;
+    for (int i = 0; i < 25; i++) {
+        totalWeight += hostKernel[i];
+    }
+    printf("Total kernel weight: %f\n", totalWeight);
+
+    std::vector<float3> hostDenoiserOutput(WIDTH* HEIGHT);
+    cudaMemcpy(hostDenoiserOutput.data(), d_outputBuffer, WIDTH* HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
+
+    std::vector<float3> hostBuffer(WIDTH* HEIGHT);
+    cudaMemcpy(hostBuffer.data(), d_accumulationBuffer, WIDTH* HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
+
     while (window.isOpen()) {
-
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            // Close window: exit
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        dim3 threadsPerBlock(16, 16);
-        dim3 numBlocks((WIDTH + threadsPerBlock.x - 1) / threadsPerBlock.x, (HEIGHT + threadsPerBlock.y - 1) / threadsPerBlock.y);
-        renderKernel <<< numBlocks, threadsPerBlock >>> (d_accumulationBuffer, WIDTH, HEIGHT, iFrame);
-        cudaDeviceSynchronize();
-
-        std::vector<float3> hostBuffer(WIDTH * HEIGHT);
-        cudaMemcpy(hostBuffer.data(), d_accumulationBuffer,
-            WIDTH * HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
-
-        for (int y = 0; y < HEIGHT; ++y) {
-            for (int x = 0; x < WIDTH; ++x) {
-                int index = y * WIDTH + x;
-                float3 color = hostBuffer[index];
-                sf::Color pixelColor = ConvertColor(color);
-                newFrame.setPixel(x, y, pixelColor);
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                // zamykanie okna
+                if (event.type == sf::Event::Closed)
+                    window.close();
+                // przełączanie trybu po wciśnięciu spacji
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
+                    if (mode == DisplayMode::Final) {
+                        mode = DisplayMode::WorldPosition;
+                        for (int y = 0; y < HEIGHT; ++y) {
+                            for (int x = 0; x < WIDTH; ++x) {
+                                int index = y * WIDTH + x;
+                                sf::Color pixelColor = ConvertColor(hostDenoiserOutput[index]);
+                                newFrame.setPixel(x, y, pixelColor);
+                            }
+                        }
+                    }
+                    else if (mode == DisplayMode::WorldPosition) {
+                        mode = DisplayMode::Normal;
+                        for (int y = 0; y < HEIGHT; ++y) {
+                            for (int x = 0; x < WIDTH; ++x) {
+                                int index = y * WIDTH + x;
+                                sf::Color pixelColor = ConvertColor(hostBuffer[index]);
+                                newFrame.setPixel(x, y, pixelColor);
+                            }
+                        }
+                    }
+                    else
+                        mode = DisplayMode::Final;
+                }
             }
-        }
 
-        if (!texture.loadFromImage(newFrame)) {
-            return 1;
-        }
-        sf::Sprite sprite(texture);
 
-        window.clear();
-        window.draw(sprite);
-        window.display();
+            if (!texture.loadFromImage(newFrame)) {
+                return 1;
+            }
 
-        iFrame++;
+
+
+            sf::Sprite sprite(texture);
+
+            window.clear();
+            window.draw(sprite);
+            window.display();
     }
 
+
+
     cudaFree(d_accumulationBuffer);
+    cudaFree(d_positionBuffer);
+    cudaFree(d_normalBuffer);
+    cudaFree(d_outputBuffer);
+    cudaFree(d_planes);
+    cudaFree(d_spheres);
 
     return 0;
 }
