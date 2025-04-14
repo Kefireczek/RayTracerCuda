@@ -75,7 +75,7 @@ struct Plane {
 
 #define NUM_SPHERES 8
 __managed__ Sphere* d_spheres;
-std::vector<Sphere> hostSpheres = {
+std::vector<Sphere> h_Spheres = {
     {{0, 0, 5}, 1.0f, Material(glm::vec3(0.5, 0.5, 0.5), 1)},
     {{1, 1, 6}, 1.0f, Material(glm::vec3(0.4, 0.75, 0.95))},
     {{-2, -2, 5}, 1.0f, Material(glm::vec3(0.5, 0.9, 0.7), 0.3)},
@@ -88,7 +88,7 @@ std::vector<Sphere> hostSpheres = {
 
 #define NUM_PLANES 6
 __managed__ Plane* d_planes;
-std::vector<Plane> hostPlanes = {
+std::vector<Plane> h_Planes = {
     {{0, 0, 20}, {0, 0, 1}, Material(glm::vec3(0.4, 0.4, 0.4))},
     {{-10, 0, 0}, {-1, 0, 0}, Material(glm::vec3(0, 0.4, 0))},
     {{10, 0, 0}, {1, 0, 0}, Material(glm::vec3(0, 0, 0.4))},
@@ -140,22 +140,22 @@ __device__ HitInfo rayIntersectsPlane(const Ray& ray, const Plane& plane) {
 }
 
 //Random values
-__device__ float RandomValue01(uint32_t& state) {
+__device__ float randomValue01(uint32_t& state) {
     state = state * 747796405 + 2891336453;
     uint32_t result = ((state >> ((state >> 28) + 4)) ^ state) * 277803737;
     result = (result >> 22) ^ result;
     return result / 4294967295.0;
 }
 
-__device__ float RandomValueNormalDistribution(uint32_t& state) {
-    float theta = 2 * 3.1415926 * RandomValue01(state);
-    float rho = sqrt(-2 * log(RandomValue01(state)));
+__device__ float randomValueNormalDistribution(uint32_t& state) {
+    float theta = 2 * 3.1415926 * randomValue01(state);
+    float rho = sqrt(-2 * log(randomValue01(state)));
     return rho * cos(theta);
 }
 
-__device__ float3 RandomUnitVectorCosineWeighted(uint32_t& state) {
-    float z = RandomValue01(state) * 2.0f - 1.0f;
-    float a = RandomValue01(state) * 6.28318;
+__device__ float3 randomUnitVectorCosineWeighted(uint32_t& state) {
+    float z = randomValue01(state) * 2.0f - 1.0f;
+    float a = randomValue01(state) * 6.28318;
     float r = sqrt(1.0f - z * z);
     float x = r * cos(a);
     float y = r * sin(a);
@@ -163,7 +163,7 @@ __device__ float3 RandomUnitVectorCosineWeighted(uint32_t& state) {
 }
 
 //Ray logic
-__device__ HitInfo CheckRayIntersections(const Ray& ray) {
+__device__ HitInfo checkRayIntersections(const Ray& ray) {
     HitInfo closestHit{};
     closestHit.didHit = false;
     float closestDistance = 100;
@@ -187,18 +187,18 @@ __device__ HitInfo CheckRayIntersections(const Ray& ray) {
     return closestHit;
 }
 
-__device__ float3 TraceRay(Ray ray, uint32_t& rngState) {
+__device__ float3 traceRay(Ray ray, uint32_t& rngState) {
     float3 rayColor = make_float3(1.0f, 1.0f, 1.0f);
     float3 incomingLight = make_float3(0.0f, 0.0f, 0.0f);
 
     for (int i = 0; i < MAX_BOUNCE_COUNT; i++)
     {
-        HitInfo hit = CheckRayIntersections(ray);
+        HitInfo hit = checkRayIntersections(ray);
         if (hit.didHit) {
             ray.origin = hit.hitPoint;
 
-            if (RandomValue01(rngState) > hit.material.specular) {
-                ray.direction = normalize(hit.normal + RandomUnitVectorCosineWeighted(rngState));
+            if (randomValue01(rngState) > hit.material.specular) {
+                ray.direction = normalize(hit.normal + randomUnitVectorCosineWeighted(rngState));
             }
             else {
                 ray.direction = reflect(ray.direction, hit.normal);
@@ -211,7 +211,7 @@ __device__ float3 TraceRay(Ray ray, uint32_t& rngState) {
             rayColor *= material.albedo;
 
             float p = max(rayColor.x, max(rayColor.y, rayColor.z));
-            if (RandomValue01(rngState) > p) {
+            if (randomValue01(rngState) > p) {
                 break;
             }
 
@@ -225,13 +225,13 @@ __device__ float3 TraceRay(Ray ray, uint32_t& rngState) {
     return incomingLight;
 }
 
-__device__ float3 GetPixelColor(int x, int y, uint32_t seed)
+__device__ float3 getPixelColor(int x, int y, uint32_t seed)
 {
     float2 pos = make_float2(x, y);
 
     float aspectRatio = (float)WIDTH / HEIGHT;
 
-    float2 jitter = (make_float2(RandomValue01(seed), RandomValue01(seed)) - 0.5f) * 2;
+    float2 jitter = (make_float2(randomValue01(seed), randomValue01(seed)) - 0.5f) * 2;
     pos += jitter;
 
     // Normalizacja współrzędnych ekranu
@@ -249,7 +249,7 @@ __device__ float3 GetPixelColor(int x, int y, uint32_t seed)
 
     for (int i = 0; i < NUM_RAYS_PER_PIXEL; i++)
     {
-        totalIncomingLight += TraceRay(ray, seed);
+        totalIncomingLight += traceRay(ray, seed);
     }
 
     totalIncomingLight /= NUM_RAYS_PER_PIXEL;
@@ -267,7 +267,7 @@ __global__ void renderKernel(float3* accBuffer, int width, int height, uint32_t 
     uint32_t rngState = (uint32_t)(uint32_t(x) * uint32_t(1973) + uint32_t(y) * uint32_t(9277) + uint32_t(iFrame) * uint32_t(26699)) | uint32_t(1);
 
     float weight = 1.0f / (iFrame + 1);
-    float3 color = GetPixelColor(x, y, rngState);
+    float3 color = getPixelColor(x, y, rngState);
     accBuffer[index] = color * weight + accBuffer[index] * (1.0f - weight);
 }
 
@@ -281,7 +281,7 @@ glm::vec3 ACESToneMapping(const glm::vec3& x) {
     return glm::clamp((x * (a * x + b)) / (x * (c * x + d) + e), 0.0f, 1.0f);
 }
 
-glm::vec3 LinearToSRGB(glm::vec3 color) {
+glm::vec3 linearToSRGB(glm::vec3 color) {
     glm::vec3 higher = glm::pow(color, glm::vec3(1.0f / 2.4f)) * 1.055f - 0.055f;
     glm::vec3 lower = color * 12.92f;
 
@@ -293,13 +293,13 @@ glm::vec3 LinearToSRGB(glm::vec3 color) {
     return result;
 }
 
-sf::Color ConvertColor(const float3& hdrColor) {
+sf::Color convertColor(const float3& hdrColor) {
 
     glm::vec3 c = glm::vec3(hdrColor.x, hdrColor.y, hdrColor.z);
 
     glm::vec3 mapped = ACESToneMapping(c);
 
-    glm::vec3 gammaCorrected = LinearToSRGB(mapped);
+    glm::vec3 gammaCorrected = linearToSRGB(mapped);
     //glm::vec3 gammaCorrected = mapped;
 
     int r = static_cast<int>(gammaCorrected.r * 255.0f);
@@ -321,10 +321,10 @@ int main() {
 
     //__managed__ Sphere* d_spheres;
     cudaMallocManaged(&d_spheres, NUM_SPHERES * sizeof(Sphere));
-    memcpy(d_spheres, hostSpheres.data(), NUM_SPHERES * sizeof(Sphere));
+    memcpy(d_spheres, h_Spheres.data(), NUM_SPHERES * sizeof(Sphere));
 
     cudaMallocManaged(&d_planes, NUM_PLANES * sizeof(Plane));
-    memcpy(d_planes, hostPlanes.data(), NUM_PLANES * sizeof(Plane));
+    memcpy(d_planes, h_Planes.data(), NUM_PLANES * sizeof(Plane));
 
 
     uint32_t iFrame = 0;
@@ -343,15 +343,15 @@ int main() {
         renderKernel <<< numBlocks, threadsPerBlock >>> (d_accumulationBuffer, WIDTH, HEIGHT, iFrame);
         cudaDeviceSynchronize();
 
-        std::vector<float3> hostBuffer(WIDTH * HEIGHT);
-        cudaMemcpy(hostBuffer.data(), d_accumulationBuffer,
+        std::vector<float3> h_buffer(WIDTH * HEIGHT);
+        cudaMemcpy(h_buffer.data(), d_accumulationBuffer,
             WIDTH * HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
 
         for (int y = 0; y < HEIGHT; ++y) {
             for (int x = 0; x < WIDTH; ++x) {
                 int index = y * WIDTH + x;
-                float3 color = hostBuffer[index];
-                sf::Color pixelColor = ConvertColor(color);
+                float3 color = h_buffer[index];
+                sf::Color pixelColor = convertColor(color);
                 newFrame.setPixel(x, y, pixelColor);
             }
         }
