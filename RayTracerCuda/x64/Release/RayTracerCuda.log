@@ -462,7 +462,7 @@ C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu(32): warning #1866-D: a
                                     ^
   
   kernel.cu
-  tmpxft_00004abc_00000000-7_kernel.cudafe1.cpp
+  tmpxft_00005904_00000000-7_kernel.cudafe1.cpp
 C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu(91): warning C4305: "argument": obcięcie z "double" do "float"
 C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu(427): warning C4244: "inicjowanie": konwersja z "int" do "float", możliwa utrata danych
 C:\Users\Patryk\Documents\GitHub\RayTracerCuda\kernel.cu(431): warning C4244: "argument": konwersja z "float" do "int", możliwa utrata danych

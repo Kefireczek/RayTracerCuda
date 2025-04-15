@@ -14,7 +14,7 @@
 const int WIDTH = 800;
 const int HEIGHT = 800;
 const int MAX_BOUNCE_COUNT = 10;
-const int NUM_RAYS_PER_PIXEL = 4096;
+const int NUM_RAYS_PER_PIXEL = 10;
 
 
 float host_C_PHI = 7.017f;  // Initial value
@@ -454,84 +454,10 @@ int main() {
 	cudaMallocManaged(&d_planes, NUM_PLANES * sizeof(Plane));
 	memcpy(d_planes, hostPlanes.data(), NUM_PLANES * sizeof(Plane));
 
-	enum class DisplayMode { Final, WorldPosition, Normal };
-	DisplayMode mode = DisplayMode::WorldPosition;
+	enum class DisplayMode { Denoised, NoDenoiser };
+	DisplayMode mode = DisplayMode::NoDenoiser;
 
 	uint32_t iFrame = 0;
-
-	//while (window.isOpen()) {
-
-	//    sf::Event event;
-	//    while (window.pollEvent(event)) {
-	//        // zamykanie okna
-	//        if (event.type == sf::Event::Closed)
-	//            window.close();
-	//        // przełączanie trybu po wciśnięciu spacji
-	//        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
-	//            if (mode == DisplayMode::Final)
-	//                mode = DisplayMode::WorldPosition;
-	//            else if (mode == DisplayMode::WorldPosition)
-	//                mode = DisplayMode::Normal;
-	//            else
-	//                mode = DisplayMode::Final;
-	//        }
-	//    }
-
-	//    dim3 threadsPerBlock(16, 16);
-	//    dim3 numBlocks((WIDTH + threadsPerBlock.x - 1) / threadsPerBlock.x, (HEIGHT + threadsPerBlock.y - 1) / threadsPerBlock.y);
-	//    renderKernel <<< numBlocks, threadsPerBlock >>> (d_accumulationBuffer, d_positionBuffer, d_normalBuffer, WIDTH, HEIGHT, iFrame);
-	//    cudaDeviceSynchronize();
-
-	//    std::vector<float3> hostBuffer(WIDTH * HEIGHT);
-	//    std::vector<float3> hostPos(WIDTH* HEIGHT);
-	//    std::vector<float3> hostNorm(WIDTH* HEIGHT);
-	//    cudaMemcpy(hostBuffer.data(), d_accumulationBuffer, WIDTH* HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
-	//    cudaMemcpy(hostPos.data(), d_positionBuffer, WIDTH* HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
-	//    cudaMemcpy(hostNorm.data(), d_normalBuffer, WIDTH* HEIGHT * sizeof(float3), cudaMemcpyDeviceToHost);
-
-
-	//    for (int y = 0; y < HEIGHT; ++y) {
-	//        for (int x = 0; x < WIDTH; ++x) {
-	//            int index = y * WIDTH + x;
-	//            sf::Color pixelColor;
-	//            if (mode == DisplayMode::Final) {
-	//                // konwersja HDR -> sRGB (istniejąca funkcja)
-	//                pixelColor = ConvertColor(hostBuffer[index]);
-	//            }
-	//            else if (mode == DisplayMode::WorldPosition) {
-	//                // Mapowanie world position na zakres 0-255
-	//                // Tutaj przykładowo zakładamy, że pozycje mieszczą się w zakresie (-10,10)
-	//                float3 pos = hostPos[index];
-	//                auto mapPos = [](float v) {
-	//                    float norm = (v + 10.0f) / 20.0f;
-	//                    return static_cast<int>(std::min(std::max(norm, 0.0f), 1.0f) * 255);
-	//                    };
-	//                pixelColor = sf::Color(mapPos(pos.x), mapPos(pos.y), mapPos(pos.z));
-	//            }
-	//            else if (mode == DisplayMode::Normal) {
-	//                // Normalizujemy normalne: są w zakresie [-1,1], więc przesuwamy do [0,1]
-	//                float3 n = hostNorm[index];
-	//                int r = static_cast<int>((n.x * 0.5f + 0.5f) * 255.0f);
-	//                int g = static_cast<int>((n.y * 0.5f + 0.5f) * 255.0f);
-	//                int b = static_cast<int>((n.z * 0.5f + 0.5f) * 255.0f);
-	//                pixelColor = sf::Color(r, g, b);
-	//            }
-	//            newFrame.setPixel(x, y, pixelColor);
-	//        }
-	//    }
-
-	//    if (!texture.loadFromImage(newFrame)) {
-	//        return 1;
-	//    }
-	//    sf::Sprite sprite(texture);
-
-	//    window.clear();
-	//    window.draw(sprite);
-	//    window.display();
-
-	//    iFrame++;
-	//}
-
 
 	dim3 threadsPerBlock(16, 16);
 	dim3 numBlocks((WIDTH + threadsPerBlock.x - 1) / threadsPerBlock.x, (HEIGHT + threadsPerBlock.y - 1) / threadsPerBlock.y);
@@ -543,9 +469,6 @@ int main() {
 
 	int2 hostOffsets[25] = { make_int2(-2, -2), make_int2(-1, -2), make_int2(0, -2), make_int2(1, -2), make_int2(2, -2), make_int2(-2, -1), make_int2(-1, -1), make_int2(0, -1), make_int2(1, -1), make_int2(2, -1), make_int2(-2, 0), make_int2(-1, 0), make_int2(0, 0), make_int2(1, 0), make_int2(2, 0), make_int2(-2, 1), make_int2(-1, 1), make_int2(0, 1), make_int2(1, 1), make_int2(2, 1), make_int2(-2, 2), make_int2(-1, 2), make_int2(0, 2), make_int2(1, 2), make_int2(2, 2) };
 	cudaMemcpyToSymbol(offsets, &hostOffsets, 25 * sizeof(int2));
-
-
-
 
 	DenoiseImage();
 
@@ -567,13 +490,10 @@ int main() {
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
-			// zamykanie okna
 			if (event.type == sf::Event::Closed)
 				window.close();
-			// przełączanie trybu po wciśnięciu spacji
 			if (event.type == sf::Event::KeyPressed) {
 				switch (event.key.code) {
-					// C_PHI adjustments
 				case sf::Keyboard::Q:
 					host_C_PHI += adjustmentSpeed;
 					needsUpdate = true;
@@ -583,7 +503,6 @@ int main() {
 					needsUpdate = true;
 					break;
 
-					// N_PHI adjustments
 				case sf::Keyboard::W:
 					host_N_PHI += adjustmentSpeed;
 					needsUpdate = true;
@@ -593,7 +512,6 @@ int main() {
 					needsUpdate = true;
 					break;
 
-					// P_PHI adjustments
 				case sf::Keyboard::E:
 					host_P_PHI += adjustmentSpeed;
 					needsUpdate = true;
@@ -605,14 +523,14 @@ int main() {
 				}
 			}
 			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
-				if (mode == DisplayMode::Final) {
-					mode = DisplayMode::WorldPosition;
+				if (mode == DisplayMode::Denoised) {
+					mode = DisplayMode::NoDenoiser;
+					needsUpdate = true;
 				}
-				else if (mode == DisplayMode::WorldPosition) {
-					mode = DisplayMode::Normal;
-				}
-				else
-					mode = DisplayMode::Final;
+				else if (mode == DisplayMode::NoDenoiser) {
+					mode = DisplayMode::Denoised;
+					needsUpdate = true;
+				}	
 			}
 		}
 
@@ -629,13 +547,10 @@ int main() {
 				for (int x = 0; x < WIDTH; ++x) {
 					int index = y * WIDTH + x;
 					sf::Color pixelColor;
-					if (mode == DisplayMode::Final) {
+					if (mode == DisplayMode::Denoised) {
 						pixelColor = ConvertColor(hostDenoiserOutput[index]);
 					}
-					else if (mode == DisplayMode::WorldPosition) {
-						pixelColor = ConvertColor(hostBuffer[index]);
-					}
-					else if (mode == DisplayMode::Normal) {
+					else if (mode == DisplayMode::NoDenoiser) {
 						pixelColor = ConvertColor(hostBuffer[index]);
 					}
 					newFrame.setPixel(x, y, pixelColor);
