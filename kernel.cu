@@ -14,7 +14,7 @@
 const int WIDTH = 800;
 const int HEIGHT = 800;
 const int MAX_BOUNCE_COUNT = 10;
-const int NUM_RAYS_PER_PIXEL = 10;
+const int NUM_RAYS_PER_PIXEL = 1000;
 
 
 float host_C_PHI = 7.017f;  // Initial value
